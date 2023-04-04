@@ -1,1 +1,1 @@
-# DataMiningCourseMaterials
+# Data_Mining_Course_Materials
