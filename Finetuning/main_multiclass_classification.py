@@ -8,7 +8,7 @@ import numpy as np
 
 from transformers_helper import load_tokenizer_and_model
 from CustomDataset import CustomDataset, encode_for_inference
-import finetuning_classification, reports
+import finetuning_classification
 
 root_dir = '/home/jihyeparkk/DATA/Data_Mining_Course_Materials' 
 model_save_dir = os.path.join(root_dir, 'temp')
