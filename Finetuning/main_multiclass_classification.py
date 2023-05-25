@@ -16,7 +16,7 @@ train_filepath = os.path.join(root_dir, '마스크_가격,디자인,사이즈_30
 model_name_or_dir = 'beomi/KcELECTRA-base-v2022'
 model_name_alias_dict = {'beomi/KcELECTRA-base-v2022': 'KcELECTRA'}
 model_save_dir = os.path.join(root_dir, model_name_alias_dict[model_name_or_dir])
-if not os.path.exists(save_dir): os.makedirs(model_save_dir)
+if not os.path.exists(model_save_dir): os.makedirs(model_save_dir)
     
 def do_prepare_data(relabel_dict, filepath):
     df = pd.read_csv(filepath)[['text', 'label']]
