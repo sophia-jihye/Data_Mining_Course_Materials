@@ -23,14 +23,14 @@ def do_prepare_data(relabel_dict, filepath):
     df['label'] = df['label'].apply(lambda x: relabel_dict[x])
     return df
     
-def start_finetuning(model_name_or_dir, num_classes, train_texts, train_labels, val_texts, val_labels, save_dir, num_train_epochs):
+def start_finetuning(model_name_or_dir, num_classes, train_texts, train_labels, val_texts, val_labels, save_dir):
     tokenizer, model = load_tokenizer_and_model(model_name_or_dir, num_classes=num_classes, mode='classification')
     
     print('Getting data..\n')
     train_dataset = CustomDataset(tokenizer, train_texts, train_labels)
     val_dataset = CustomDataset(tokenizer, val_texts, val_labels)
     
-    finetuning_classification.train(model, train_dataset, val_dataset, save_dir, num_train_epochs)
+    finetuning_classification.train(model, train_dataset, val_dataset, save_dir)
     tokenizer.save_pretrained(save_dir)
 
 if __name__ == '__main__':        
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     y = source_df['label'].values
     train_texts, val_texts, train_labels, val_labels = train_test_split(X, y, stratify=y, test_size=0.2, shuffle=True, random_state=0)
 
-    start_finetuning(model_name_or_dir, num_classes, train_texts, train_labels, val_texts, val_labels, model_save_dir, num_train_epochs)
+    start_finetuning(model_name_or_dir, num_classes, train_texts, train_labels, val_texts, val_labels, model_save_dir)
 
     # To save memory, delete the finetuned model in `temp` directory once model training is finished
     try: shutil.rmtree(model_save_dir)
