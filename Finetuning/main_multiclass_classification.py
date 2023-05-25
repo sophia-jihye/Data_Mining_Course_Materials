@@ -11,12 +11,13 @@ from CustomDataset import CustomDataset, encode_for_inference
 import finetuning_classification
 
 root_dir = '/home/jihyeparkk/DATA/Data_Mining_Course_Materials' 
-model_save_dir = os.path.join(root_dir, 'temp')
 train_filepath = os.path.join(root_dir, '마스크_가격,디자인,사이즈_3000.csv')
 
 model_name_or_dir = 'beomi/KcELECTRA-base-v2022'
 model_name_alias_dict = {'beomi/KcELECTRA-base-v2022': 'KcELECTRA'}
-
+model_save_dir = os.path.join(root_dir, model_name_alias_dict[model_name_or_dir])
+if not os.path.exists(save_dir): os.makedirs(model_save_dir)
+    
 def do_prepare_data(relabel_dict, filepath):
     df = pd.read_csv(filepath)[['text', 'label']]
     print('Loaded {}'.format(filepath))
@@ -38,9 +39,6 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     relabel_dict = {'가격':0, '디자인':1, '사이즈':2}
     num_classes = len(relabel_dict)    
-    
-    save_dir = os.path.join(root_dir, 'MaskAspectClassification')
-    if not os.path.exists(save_dir): os.makedirs(save_dir)
         
     source_df = do_prepare_data(relabel_dict, train_filepath)
     X = source_df['text'].values
